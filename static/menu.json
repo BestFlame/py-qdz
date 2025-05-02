@@ -1,0 +1,37 @@
+{
+  "menu_items": [
+    {
+      "title": "个人中心",
+      "icon": "icon-user",
+      "url": "/user/profile"
+    },
+    {
+      "title": "系统设置",
+      "icon": "icon-settings",
+      "submenu": [
+        {
+          "title": "基础配置",
+          "url": "/system/basic"
+        },
+        {
+          "title": "权限管理",
+          "url": "/system/permission"
+        }
+      ]
+    },
+    {
+      "title": "数据报表",
+      "icon": "icon-chart",
+      "submenu": [
+        {
+          "title": "销售统计",
+          "url": "/report/sales"
+        },
+        {
+          "title": "用户分析",
+          "url": "/report/users"
+        }
+      ]
+    }
+  ]
+}

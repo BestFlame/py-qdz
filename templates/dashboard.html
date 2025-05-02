@@ -3,13 +3,12 @@
 {% block title %}系统首页{% endblock %}
 
 {% block sidebar %}
-<nav class="side-menu">
-    <ul>
-        <li><a href="{{ url_for('user.profile') }}"><i class="icon-user"></i>个人中心</a></li>
-        <li><a href="#"><i class="icon-settings"></i>系统设置</a></li>
-        <li><a href="#"><i class="icon-chart"></i>数据统计</a></li>
-    </ul>
+<nav class="sidebar">
+    <div class="side-menu">
+        <!-- 菜单由JavaScript动态生成 -->
+    </div>
 </nav>
+<script src="/static/js/menu.js"></script>
 {% endblock %}
 
 {% block content %}

@@ -16,7 +16,7 @@ def register():
 @user_bp.route('/profile')
 @login_required
 def profile():
-    return render_template('user_profile.html')
+    return render_template('person/user_profile.html')
 
 @user_bp.route('/logout')
 @login_required

@@ -41,19 +41,94 @@ body {
     box-shadow: 2px 0 8px rgba(0,0,0,0.1);
 }
 
-.side-menu ul {
-    list-style: none;
-    padding: 16px 0;
+/* 多级菜单样式 - 新版flex布局 */
+.side-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0;
 }
 
-.side-menu li a {
-    display: block;
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
     padding: 12px 24px;
     color: #333;
     text-decoration: none;
+    transition: background 0.2s ease;
 }
 
-.side-menu li a:hover {
+.menu-link:hover {
+    background: #f8f9fa;
+}
+
+.submenu-toggle {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+    padding: 0 12px;
+}
+
+.menu-link {
+    cursor: pointer;
+    padding-right: 40px;
+    position: relative;
+}
+
+.menu-item.expanded > .menu-link {
+    background: #f8f9fa;
+}
+
+.submenu-container {
+    transition: max-height 0.3s ease-out;
+}
+
+.submenu-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.submenu-item .menu-link {
+    padding-left: 40px;
+}
+
+.submenu-item .submenu-item .menu-link {
+    padding-left: 56px;
+}
+
+.menu-item.expanded > .submenu-container {
+    max-height: 1000px;
+}
+
+.menu-item.expanded > .menu-link > .submenu-toggle {
+    transform: rotate(90deg);
+}
+
+.menu-icon {
+    width: 20px;
+    margin-right: 12px;
+}
+
+.side-menu a {
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.side-menu i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.side-menu li:hover {
     background: #f5f5f5;
 }
 
