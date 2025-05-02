@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}系统首页{% endblock %}
+
+{% block sidebar %}
+<nav class="side-menu">
+    <ul>
+        <li><a href="#"><i class="icon-user"></i>用户管理</a></li>
+        <li><a href="#"><i class="icon-settings"></i>系统设置</a></li>
+        <li><a href="#"><i class="icon-chart"></i>数据统计</a></li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-welcome">
+    <h1>欢迎使用管理系统</h1>
+    <p>请通过左侧菜单开始操作</p>
+</div>
+{% endblock %}

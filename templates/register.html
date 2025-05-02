@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="login-container">
+    <h2>用户注册</h2>
+    <form method="POST" action="{{ url_for('register') }}">
+        <div class="form-group">
+            <label for="email">邮箱地址</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn-login">立即注册</button>
+    </form>
+    <div class="register-link">
+        已有账号？<a href="{{ url_for('login') }}">去登录</a>
+    </div>
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <p>✅ 注册成功！2秒后自动跳转至登录页面...</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            {% if success %}
+                const modal = document.getElementById('successModal');
+                modal.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = "{{ url_for('login') }}";
+                }, 2000);
+            {% endif %}
+        });
+    </script>
+</div>
+{% endblock %}

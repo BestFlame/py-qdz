@@ -9,19 +9,6 @@ import sqlite3
 from pathlib import Path
 
 db_path = Path(__file__).parent.parent / 'db' / 'database.db'
-conn = sqlite3.connect(str(db_path))
-cursor = conn.cursor()
-
-# 初始化用户表
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
-''')
-conn.commit()
 
 
 def validate_email_format(email):
@@ -38,21 +25,32 @@ def register_user(email: str, password: str):
         return {'error': '密码需要至少8位且包含大写字母和数字'}, 400
 
     try:
-        cursor.execute(
-            "INSERT INTO users (email, password_hash) VALUES (?, ?)",
-            (email, password_hash)
-        )
-        conn.commit()
-        return True
+        with sqlite3.connect(str(db_path), check_same_thread=False) as conn:
+            cursor = conn.cursor()
+            password_hash = generate_password_hash(password)
+            cursor.execute(
+                "INSERT INTO users (email, password_hash) VALUES (?, ?)",
+                (email, password_hash)
+            )
+            conn.commit()
+            return {'success': True}, 201
     except sqlite3.IntegrityError:
-        return {'error': '邮箱已被注册'}, 409
+        return {'error': '邮箱已被注册', 'success': False}, 409
 
 def authenticate_user(email, password):
-    user = users.get(email)
-    if not user or not check_password_hash(user['password_hash'], password):
-        return {'error': '邮箱或密码错误'}, 401
-    
-    return {
-        'email': user['email'],
-        'created_at': '2024-01-01'  # 示例数据
-    }, 200
+    try:
+        with sqlite3.connect(str(db_path), check_same_thread=False) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
+            user = cursor.fetchone()
+            
+            if not user or not check_password_hash(user[2], password):
+                return {'error': '邮箱或密码错误'}, 401
+
+            return {
+                'id': user[0],
+                'email': user[1],
+                'created_at': user[3]
+            }, 200
+    except Exception as e:
+        return {'error': '服务器内部错误'}, 500
