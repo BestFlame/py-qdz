@@ -24,9 +24,11 @@
         </aside>
 
         <main class="content-area">
-            {% block content %}
-            <!-- 主要内容区域 -->
-            {% endblock %}
+            <div id="content-frame">
+                {% block content %}
+                <!-- 动态内容区域 -->
+                {% endblock %}
+            </div>
         </main>
     </div>
 

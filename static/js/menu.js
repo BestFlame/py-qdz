@@ -8,6 +8,22 @@ function initMenu() {
         createMenuItems(data.menu_items)
       );
       container.addEventListener('click', function(e) {
+        // 处理菜单点击
+        const menuLink = e.target.closest('a[href]');
+        if (menuLink) {
+          e.preventDefault();
+          const url = menuLink.getAttribute('href');
+          
+          // AJAX加载内容
+          fetch(url)
+            .then(response => response.text())
+            .then(html => {
+              document.getElementById('content-frame').innerHTML = html;
+              history.pushState(null, '', url);
+            });
+        }
+        
+        // 处理子菜单展开
         const menuItem = e.target.closest('.has-children');
         if (menuItem) {
           menuItem.classList.toggle('expanded');
