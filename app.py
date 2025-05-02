@@ -1,12 +1,30 @@
 from flask import Flask, session, redirect, url_for, render_template, request
-from service.user_service import authenticate_user, register_user
+from flask_login import LoginManager, login_user, logout_user, login_required
+from service.user_service import authenticate_user, register_user, update_user_info, change_password, get_user_by_email
+from webapi.user import user_bp
 
 app = Flask(__name__)
+app.register_blueprint(user_bp)
 app.secret_key = 'your-secret-key-here'
+
+# 初始化Flask-Login
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    from service.user_service import get_user_by_id
+    return get_user_by_id(user_id)
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
 
 @app.route('/')
 def index():
-    return 'Hello World!'
+    return redirect(url_for('login'))
 
 @app.route('/health')
 def health_check():
@@ -19,7 +37,8 @@ def login():
         password = request.form.get('password')
         result, status = authenticate_user(email, password)
         if status == 200:
-            session['user'] = email
+            user = get_user_by_email(email)
+            login_user(user)
             return redirect(url_for('dashboard'))
         return render_template('login.html', error=result.get('error'))
     return render_template('login.html')
@@ -35,11 +54,7 @@ def register():
         return render_template('register.html', error=result.get('error'))
     return render_template('register.html')
 
-@app.route('/dashboard')
-def dashboard():
-    if 'user' not in session:
-        return redirect(url_for('login'))
-    return render_template('dashboard.html')
 
+# 在这里添加其他路由
 if __name__ == '__main__':
     app.run(debug=True)

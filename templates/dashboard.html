@@ -5,7 +5,7 @@
 {% block sidebar %}
 <nav class="side-menu">
     <ul>
-        <li><a href="#"><i class="icon-user"></i>用户管理</a></li>
+        <li><a href="{{ url_for('user.profile') }}"><i class="icon-user"></i>个人中心</a></li>
         <li><a href="#"><i class="icon-settings"></i>系统设置</a></li>
         <li><a href="#"><i class="icon-chart"></i>数据统计</a></li>
     </ul>
