@@ -1,0 +1,9 @@
+{% block top_nav %}{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content_box %}
+<div class="content-area" style="margin-left:0; padding:40px; height: calc(100vh - 80px); overflow: auto;">
+    {% block content %}{% endblock %}
+</div>
+{% endblock %}

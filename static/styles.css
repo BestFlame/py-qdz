@@ -19,6 +19,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .logo {
@@ -135,8 +140,11 @@ body {
 /* 内容区域 */
 .content-area {
     margin-left: 200px;
+    margin-top: 64px;
     padding: 24px;
     min-height: calc(100vh - 128px);
+    height: calc(100vh - 64px);
+    overflow: auto;
 }
 
 /* 登录页面 */
@@ -207,6 +215,28 @@ body {
 .error-message {
     color: #ff4d4f;
     margin-top: 16px;
+}
+
+/* FastGPT 团队管理样式 */
+.team-container {
+  display: grid;
+  grid-template-rows: 2fr 8fr;
+  height: calc(100vh - 128px);
+  gap: 1px;
+  background: #dee2e6;
+}
+
+.connection-section {
+  background: white;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.management-section {
+  background: white;
+  padding: 24px;
+  overflow-y: auto;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
 }
 
 /* 页脚 */

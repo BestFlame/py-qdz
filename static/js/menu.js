@@ -8,9 +8,19 @@ function initMenu() {
         createMenuItems(data.menu_items)
       );
       container.addEventListener('click', function(e) {
-        // 处理菜单点击
         const menuLink = e.target.closest('a[href]');
-        if (menuLink) {
+        const menuItem = e.target.closest('.has-children');
+
+        if (menuItem) {
+          // 处理子菜单展开
+          menuItem.classList.toggle('expanded');
+          e.preventDefault();
+          const subContainer = menuItem.querySelector('.submenu-container');
+          subContainer.style.maxHeight = subContainer.style.maxHeight ? null : subContainer.scrollHeight + 'px';
+          e.stopPropagation();
+        }
+        
+        if (menuLink && !menuLink.parentElement.classList.contains('has-children')) {
           e.preventDefault();
           const url = menuLink.getAttribute('href');
           
@@ -21,15 +31,6 @@ function initMenu() {
               document.getElementById('content-frame').innerHTML = html;
               history.pushState(null, '', url);
             });
-        }
-        
-        // 处理子菜单展开
-        const menuItem = e.target.closest('.has-children');
-        if (menuItem) {
-          menuItem.classList.toggle('expanded');
-          e.stopPropagation();
-          const subContainer = menuItem.querySelector('.submenu-container');
-          subContainer.style.maxHeight = subContainer.style.maxHeight ? null : subContainer.scrollHeight + 'px';
         }
       });
     });

@@ -8,6 +8,7 @@
     {
       "title": "系统设置",
       "icon": "icon-settings",
+      "url": "/welcome",
       "submenu": [
         {
           "title": "基础配置",
@@ -22,6 +23,7 @@
     {
       "title": "数据报表",
       "icon": "icon-chart",
+      "url": "/welcome",
       "submenu": [
         {
           "title": "销售统计",
@@ -30,6 +32,21 @@
         {
           "title": "用户分析",
           "url": "/report/users"
+        }
+      ]
+    },
+    {
+      "title": "FastGPT",
+      "icon": "icon-chart",
+      "url": "/welcome",
+      "submenu": [
+        {
+          "title": "团队管理",
+          "url": "/fastgpt/team"
+        },
+        {
+          "title": "用户管理",
+          "url": "/fastgpt/user"
         }
       ]
     }

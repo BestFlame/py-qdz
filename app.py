@@ -2,9 +2,11 @@ from flask import Flask, session, redirect, url_for, render_template, request
 from flask_login import LoginManager, login_user, logout_user, login_required
 from service.user_service import authenticate_user, register_user, update_user_info, change_password, get_user_by_email
 from webapi.user import user_bp
+from webapi.fastgpt import fastgpt_bp
 
 app = Flask(__name__)
 app.register_blueprint(user_bp)
+app.register_blueprint(fastgpt_bp)
 app.secret_key = 'your-secret-key-here'
 
 # 初始化Flask-Login
@@ -16,6 +18,10 @@ login_manager.init_app(app)
 def load_user(user_id):
     from service.user_service import get_user_by_id
     return get_user_by_id(user_id)
+
+@app.route('/welcome')
+def welcome():
+    return render_template('welcome.html')
 
 @app.route('/dashboard')
 @login_required
